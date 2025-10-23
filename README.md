@@ -335,14 +335,3 @@ adb shell am start -n com.example.apkupdater/.MainActivity
 3. **Versionamento**: Implemente verificação de `versionCode` além de timestamp
 4. **Retry logic**: Adicione tentativas em caso de falha de rede
 
-## 📄 Licença
-
-[Adicione sua licença aqui]
-
-## 👥 Contribuindo
-
-[Adicione instruções de contribuição aqui]
-
-## 📞 Suporte
-
-[Adicione informações de contato/suporte aqui]
