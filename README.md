@@ -1,4 +1,3 @@
-```markdown
 # APK Auto-Updater
 
 Sistema automatizado de atualização de APKs via servidor local, projetado para manter aplicativos Android sempre atualizados sem intervenção manual.
@@ -359,3 +358,4 @@ adb shell am start -n com.example.apkupdater/.MainActivity
 
 [Adicione informações de contato/suporte aqui]
 ```
+
