@@ -47,7 +47,7 @@ O APK Auto-Updater é uma solução completa para distribuição automática de 
 
 ## 🏗️ Arquitetura
 
-
+```
 ┌─────────────────┐         HTTP/REST        ┌──────────────────┐
 │   Servidor      │◄─────────────────────────┤   App Android    │
 │   Node.js       │                          │   (Cliente)      │
@@ -63,7 +63,7 @@ O APK Auto-Updater é uma solução completa para distribuição automática de 
 │  /srv/samba/    │                          │  Notifications   │
 │  local/Apk/     │                          │  + UI            │
 └─────────────────┘                          └──────────────────┘
-
+```
 
 ## 💻 Requisitos
 
@@ -97,7 +97,7 @@ const APK_DIR = '/srv/samba/local/Apk';
 
 # Inicie o servidor
 node server.js
-
+```
 
 O servidor estará disponível em `http://0.0.0.0:5176`
 
@@ -109,13 +109,13 @@ O servidor estará disponível em `http://0.0.0.0:5176`
 2. Aguarde o Gradle sync
 3. Build > Build Bundle(s) / APK(s) > Build APK(s)
 4. O APK estará em app/build/outputs/apk/release/
-
+```
 
 ### 3. Instalar o App no Dispositivo
 
 ```bash
 adb install app-release.apk
-
+```
 
 Ou transfira o APK manualmente e instale.
 
@@ -131,7 +131,7 @@ Basta colocar os arquivos `.apk` no diretório configurado:
 /srv/samba/local/Apk/Updater.apk
 
 # Outros APKs ficam disponíveis via /api/apps
-
+```
 
 ### App Android - Alterar IP do Servidor
 
@@ -139,7 +139,7 @@ Edite `UpdateService.kt`:
 
 ```kotlin
 private val baseUrl = "http://10.0.11.150:5176"  // Altere para seu IP
-
+```
 
 ### Ajustar Intervalo de Verificação
 
@@ -147,7 +147,7 @@ Edite `UpdateService.kt`:
 
 ```kotlin
 delay(15000)  // 15 segundos (valor em milissegundos)
-
+```
 
 ## 📱 Uso
 
@@ -162,7 +162,7 @@ delay(15000)  // 15 segundos (valor em milissegundos)
 
 ### Fluxo de Atualização
 
-
+```
 1. App verifica servidor a cada 15s
 2. Servidor retorna timestamp do APK
 3. Se timestamp > último conhecido:
@@ -172,7 +172,7 @@ delay(15000)  // 15 segundos (valor em milissegundos)
    └─ Abre tela de instalação automaticamente
 4. Usuário confirma instalação
 5. App atualiza e continua monitorando
-
+```
 
 ### Notificações
 
@@ -189,7 +189,7 @@ delay(15000)  // 15 segundos (valor em milissegundos)
 
 ## 📁 Estrutura do Projeto
 
-
+```
 apk-updater/
 ├── server/
 │   ├── server.js              # Servidor Express
@@ -212,7 +212,7 @@ apk-updater/
     │
     ├── build.gradle.kts
     └── proguard-rules.pro
-
+```
 
 ## 🔌 API Endpoints
 
@@ -230,7 +230,7 @@ Lista todos os APKs disponíveis no diretório.
     "modifiedTimestamp": 1729676400000
   }
 ]
-
+```
 
 ### GET `/api/bonus/info`
 Retorna informações do APK Bonus.
@@ -245,17 +245,17 @@ Retorna informações do APK Bonus.
   "modifiedTimestamp": 1729676400000,
   "modified": "2025-10-23T10:30:00.000Z"
 }
-
+```
 
 ### GET `/api/bonus`
 Download direto do APK Bonus.
 
 **Headers:**
-
+```
 Content-Type: application/vnd.android.package-archive
 Content-Disposition: attachment; filename="Bonus.apk"
 Content-Length: 26671104
-
+```
 
 ### GET `/api/updater/info`
 Retorna informações do APK Updater (idêntico ao `/api/bonus/info`).
@@ -267,9 +267,9 @@ Download direto do APK Updater (idêntico ao `/api/bonus`).
 Download de qualquer APK no diretório.
 
 **Exemplo:**
-
+```
 GET /api/download/MeuApp.apk
-
+```
 
 ## 🔧 Troubleshooting
 
@@ -281,7 +281,7 @@ lsof -i :5176
 
 # Teste acesso ao diretório
 ls -la /srv/samba/local/Apk/
-
+```
 
 ### App não detecta atualizações
 
@@ -289,7 +289,7 @@ ls -la /srv/samba/local/Apk/
    ```bash
    # Do dispositivo Android
    curl http://10.0.11.150:5176/api/bonus/info
-
+   ```
 
 2. **Verifique IP no código:**
    - Certifique-se que `baseUrl` em `UpdateService.kt` está correto
@@ -297,7 +297,7 @@ ls -la /srv/samba/local/Apk/
 3. **Verifique logs:**
    ```bash
    adb logcat | grep APKUpdater
-
+   ```
 
 ### Instalação falha
 
@@ -320,7 +320,7 @@ adb shell dumpsys activity services | grep UpdateService
 # Reinicie o app
 adb shell am force-stop com.example.apkupdater
 adb shell am start -n com.example.apkupdater/.MainActivity
-
+```
 
 ### Consumo alto de bateria
 
