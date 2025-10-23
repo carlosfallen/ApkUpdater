@@ -45,7 +45,6 @@ O APK Auto-Updater é uma solução completa para distribuição automática de 
 - ✅ Interface minimalista em Jetpack Compose
 
 ## 🏗️ Arquitetura
-
 ```
 ┌─────────────────┐         HTTP/REST        ┌──────────────────┐
 │   Servidor      │◄─────────────────────────┤   App Android    │
@@ -82,7 +81,6 @@ O APK Auto-Updater é uma solução completa para distribuição automática de 
 ## 🚀 Instalação
 
 ### 1. Configurar o Servidor
-
 ```bash
 # Clone o repositório
 git clone <repo-url>
@@ -101,7 +99,6 @@ node server.js
 O servidor estará disponível em `http://0.0.0.0:5176`
 
 ### 2. Compilar o App Android
-
 ```bash
 # No Android Studio
 1. Abra o projeto em app/
@@ -111,7 +108,6 @@ O servidor estará disponível em `http://0.0.0.0:5176`
 ```
 
 ### 3. Instalar o App no Dispositivo
-
 ```bash
 adb install app-release.apk
 ```
@@ -123,7 +119,6 @@ Ou transfira o APK manualmente e instale.
 ### Servidor - Adicionar Novos APKs
 
 Basta colocar os arquivos `.apk` no diretório configurado:
-
 ```bash
 # Para monitoramento específico (Bonus e Updater)
 /srv/samba/local/Apk/Bonus.apk
@@ -135,7 +130,6 @@ Basta colocar os arquivos `.apk` no diretório configurado:
 ### App Android - Alterar IP do Servidor
 
 Edite `UpdateService.kt`:
-
 ```kotlin
 private val baseUrl = "http://10.0.11.150:5176"  // Altere para seu IP
 ```
@@ -143,7 +137,6 @@ private val baseUrl = "http://10.0.11.150:5176"  // Altere para seu IP
 ### Ajustar Intervalo de Verificação
 
 Edite `UpdateService.kt`:
-
 ```kotlin
 delay(15000)  // 15 segundos (valor em milissegundos)
 ```
@@ -160,7 +153,6 @@ delay(15000)  // 15 segundos (valor em milissegundos)
 4. **O serviço inicia automaticamente**
 
 ### Fluxo de Atualização
-
 ```
 1. App verifica servidor a cada 15s
 2. Servidor retorna timestamp do APK
@@ -187,7 +179,6 @@ delay(15000)  // 15 segundos (valor em milissegundos)
 - Auto-dismiss após instalação
 
 ## 📁 Estrutura do Projeto
-
 ```
 apk-updater/
 ├── server/
@@ -215,7 +206,7 @@ apk-updater/
 
 ## 🔌 API Endpoints
 
-### GET `/api/apps`
+### GET /api/apps
 Lista todos os APKs disponíveis no diretório.
 
 **Response:**
@@ -231,7 +222,7 @@ Lista todos os APKs disponíveis no diretório.
 ]
 ```
 
-### GET `/api/bonus/info`
+### GET /api/bonus/info
 Retorna informações do APK Bonus.
 
 **Response:**
@@ -246,7 +237,7 @@ Retorna informações do APK Bonus.
 }
 ```
 
-### GET `/api/bonus`
+### GET /api/bonus
 Download direto do APK Bonus.
 
 **Headers:**
@@ -256,13 +247,13 @@ Content-Disposition: attachment; filename="Bonus.apk"
 Content-Length: 26671104
 ```
 
-### GET `/api/updater/info`
-Retorna informações do APK Updater (idêntico ao `/api/bonus/info`).
+### GET /api/updater/info
+Retorna informações do APK Updater (idêntico ao /api/bonus/info).
 
-### GET `/api/updater`
-Download direto do APK Updater (idêntico ao `/api/bonus`).
+### GET /api/updater
+Download direto do APK Updater (idêntico ao /api/bonus).
 
-### GET `/api/download/:filename`
+### GET /api/download/:filename
 Download de qualquer APK no diretório.
 
 **Exemplo:**
@@ -273,7 +264,6 @@ GET /api/download/MeuApp.apk
 ## 🔧 Troubleshooting
 
 ### Servidor não inicia
-
 ```bash
 # Verifique se a porta está em uso
 lsof -i :5176
@@ -285,18 +275,18 @@ ls -la /srv/samba/local/Apk/
 ### App não detecta atualizações
 
 1. **Verifique conectividade:**
-   ```bash
+```bash
    # Do dispositivo Android
    curl http://10.0.11.150:5176/api/bonus/info
-   ```
+```
 
 2. **Verifique IP no código:**
    - Certifique-se que `baseUrl` em `UpdateService.kt` está correto
 
 3. **Verifique logs:**
-   ```bash
+```bash
    adb logcat | grep APKUpdater
-   ```
+```
 
 ### Instalação falha
 
@@ -311,7 +301,6 @@ ls -la /srv/samba/local/Apk/
    - Se já existe uma versão instalada com assinatura diferente, desinstale primeiro
 
 ### Serviço para de funcionar
-
 ```bash
 # Verifique se o serviço está rodando
 adb shell dumpsys activity services | grep UpdateService
@@ -357,5 +346,3 @@ adb shell am start -n com.example.apkupdater/.MainActivity
 ## 📞 Suporte
 
 [Adicione informações de contato/suporte aqui]
-```
-
